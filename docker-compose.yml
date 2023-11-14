@@ -1,0 +1,65 @@
+version: "3.9"
+services:
+  rabbitmq:
+    container_name: "IntelTech.Bus"
+    image: masstransit/rabbitmq:latest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabbitmq-user
+      - RABBITMQ_DEFAULT_PASS=rabbitmq-password
+    healthcheck:
+      test: [ "CMD", "rabbitmqctl", "status" ]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+
+  postgres:
+    container_name: "IntelTech.Organizations.Database"
+    image: "postgres:latest"
+    ports:
+      - "5432:5432"
+    environment:
+      - "POSTGRES_USER=postgres-user"
+      - "POSTGRES_PASSWORD=postgres-password"
+      - "POSTGRES_DB=organizations"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+    
+  users-service:
+    restart: on-failure
+    container_name: "IntelTech.Users.Service"
+    image: "users-service:latest"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: src/IntelTech.Users.Presentation/Dockerfile
+    ports:
+      - "5100:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Staging
+      - ASPNETCORE_URLS=http://+:80
+
+  organizations-service:
+    restart: on-failure
+    container_name: "IntelTech.Organizations.Service"
+    image: "organizations-service:latest"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: src/IntelTech.Organizations.Presentation/Dockerfile
+    ports:
+      - "5200:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Staging
+      - ASPNETCORE_URLS=http://+:80
