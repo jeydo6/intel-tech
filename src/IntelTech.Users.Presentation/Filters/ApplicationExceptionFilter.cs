@@ -6,25 +6,23 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace IntelTech.Users.Presentation.Filters
+namespace IntelTech.Users.Presentation.Filters;
+
+internal sealed class ApplicationExceptionFilter : IExceptionFilter
 {
-    internal sealed class ApplicationExceptionFilter : IExceptionFilter
+    public void OnException(ExceptionContext context)
     {
-        public void OnException(ExceptionContext context)
-        {
-            var exception = context.Exception as ApplicationException;
-            if (exception is null)
-                return;
+        if (context.Exception is not ApplicationException)
+            return;
 
-            var problemDetailsFactory = context.HttpContext.RequestServices.GetRequiredService<ProblemDetailsFactory>();
+        var problemDetailsFactory = context.HttpContext.RequestServices.GetRequiredService<ProblemDetailsFactory>();
 
-            var problemDetails = problemDetailsFactory.CreateProblemDetails(
-                context.HttpContext,
-                (int)HttpStatusCode.BadRequest,
-                detail: exception.Message);
+        var problemDetails = problemDetailsFactory.CreateProblemDetails(
+            context.HttpContext,
+            (int)HttpStatusCode.BadRequest,
+            detail: context.Exception.Message);
 
-            context.HttpContext.Response.ContentType = MediaTypeNames.Application.Json;
-            context.Result = new ObjectResult(problemDetails) { StatusCode = problemDetails.Status };
-        }
+        context.HttpContext.Response.ContentType = MediaTypeNames.Application.Json;
+        context.Result = new ObjectResult(problemDetails) { StatusCode = problemDetails.Status };
     }
 }

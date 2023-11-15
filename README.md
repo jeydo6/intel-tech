@@ -1,6 +1,6 @@
 # intel-tech
 
-Test task for [IntelTech](https://lahta-spb.ru) company.
+Test task from [InteTech](https://lahta-spb.ru) company.
 
 ```
 Тестовое задание

@@ -1,8 +1,7 @@
-namespace IntelTech.Organizations.Domain.Models
+namespace IntelTech.Organizations.Domain.Models;
+
+public sealed class PaginationInfo
 {
-    public sealed class PaginationInfo
-    {
-        public int Limit { get; set; }
-        public int Offset { get; set; }
-    }
+    public int Limit { get; set; }
+    public int Offset { get; set; }
 }

@@ -2,10 +2,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using IntelTech.Organizations.Domain.Entities;
 
-namespace IntelTech.Organizations.Domain.Repositories
+namespace IntelTech.Organizations.Domain.Repositories;
+
+public interface IUserRepository
 {
-    public interface IUserRepository
-    {
-        Task<int> Create(User entity, CancellationToken cancellationToken = default);
-    }
+    Task<int> Create(User entity, CancellationToken cancellationToken = default);
 }

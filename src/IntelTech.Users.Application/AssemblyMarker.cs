@@ -1,6 +1,5 @@
-namespace IntelTech.Users.Application
+namespace IntelTech.Users.Application;
+
+public class AssemblyMarker
 {
-    public class AssemblyMarker
-    {
-    }
 }

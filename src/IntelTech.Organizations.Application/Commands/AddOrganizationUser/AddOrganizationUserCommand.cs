@@ -1,10 +1,9 @@
 using MediatR;
 
-namespace IntelTech.Organizations.Application.Commands
+namespace IntelTech.Organizations.Application.Commands;
+
+public sealed class AddOrganizationUserCommand : IRequest
 {
-    public sealed class AddOrganizationUserCommand : IRequest
-    {
-        public int UserId { get; set; }
-        public int OrganizationId { get; set; }
-    }
+    public int UserId { get; set; }
+    public int OrganizationId { get; set; }
 }
