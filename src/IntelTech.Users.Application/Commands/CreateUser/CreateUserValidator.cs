@@ -2,7 +2,7 @@ using FluentValidation;
 
 namespace IntelTech.Users.Application.Commands;
 
-internal sealed class CreateUserValidator : AbstractValidator<CreateUserCommand>
+public sealed class CreateUserValidator : AbstractValidator<CreateUserCommand>
 {
     public CreateUserValidator()
     {

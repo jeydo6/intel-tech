@@ -4,18 +4,21 @@ using Bogus;
 using Bogus.DataSets;
 using IntelTech.Organizations.Domain.Entities;
 using IntelTech.Organizations.Presentation;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IntelTech.Organizations.UnitTests;
 
-public abstract class BaseTests : IDisposable
+public abstract class TestBase : IDisposable
 {
+    private const string ControllerSuffix = "Controller";
+
     protected readonly Faker Faker = new Faker("ru");
 
     private readonly TestApplicationFixture _fixture;
 
-    public BaseTests(TestApplicationFixture fixture)
+    public TestBase(TestApplicationFixture fixture)
         => _fixture = fixture;
 
     protected WebApplicationFactory<Program> CreateHost() => CreateHost(_ => { });
@@ -52,4 +55,7 @@ public abstract class BaseTests : IDisposable
         => Enumerable.Range(0, usersCount)
             .Select(_ => CreateUser(organizationId))
             .ToArray();
+
+    protected static string GetRoute<TController>() where TController : ControllerBase
+        => typeof(TController).Name[..^ControllerSuffix.Length];
 }

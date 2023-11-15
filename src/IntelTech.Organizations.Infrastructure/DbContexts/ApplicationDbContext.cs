@@ -46,7 +46,7 @@ internal sealed class ApplicationDbContext : DbContext
         => options.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"));
 }
 
-internal class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+internal sealed class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
 {
     public ApplicationDbContext CreateDbContext(string[] args)
     {

@@ -1,21 +1,25 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentAssertions;
 using FluentValidation;
 using IntelTech.Organizations.Application.Models;
-using IntelTech.Organizations.Application.Queries;
 using IntelTech.Organizations.Infrastructure.DbContexts;
-using MediatR;
+using IntelTech.Organizations.Presentation.Contracts;
+using IntelTech.Organizations.Presentation.Controllers;
+using IntelTech.Organizations.UnitTests.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace IntelTech.Organizations.UnitTests.Commands;
+namespace IntelTech.Organizations.UnitTests.Controllers.Organizations;
 
 [Collection(TestApplicationCollection.Collection)]
-public class GetOrganizationUsersTests : BaseTests
+public sealed class GetOrganizationUsersTests : TestBase
 {
+    private static readonly string _baseUrl = $"/{GetRoute<OrganizationsController>()}/{nameof(OrganizationsController.GetUsers)}";
+
     public GetOrganizationUsersTests(TestApplicationFixture fixture) : base(fixture)
     {
     }
@@ -24,7 +28,7 @@ public class GetOrganizationUsersTests : BaseTests
     public async Task WhenGetOrganizationUsers_WithInvalidParameters_ThenException()
     {
         // Arrange
-        var command = new GetOrganizationUsersQuery
+        var request = new GetOrganizationUsersRequest
         {
             PaginationInfo = new PaginationInfo()
         };
@@ -32,11 +36,11 @@ public class GetOrganizationUsersTests : BaseTests
         using var host = CreateHost();
         using var scope = host.Services.CreateScope();
 
-        var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+        var client = host.CreateDefaultClient();
 
         // Act / Assert
         await FluentActions
-            .Awaiting(async () => await mediator.Send(command))
+            .Awaiting(() => client.PostAsync(_baseUrl, request))
             .Should()
             .ThrowAsync<ValidationException>();
     }
@@ -67,26 +71,31 @@ public class GetOrganizationUsersTests : BaseTests
         using var scope = host.Services.CreateScope();
 
         var mapper = scope.ServiceProvider.GetRequiredService<IMapper>();
-        var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
         var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
         await dbContext.Organizations.AddAsync(organization);
         await dbContext.Users.AddRangeAsync(users);
         await dbContext.SaveChangesAsync();
 
-        var queries = paginationInfos
-            .Select(pi => new GetOrganizationUsersQuery
+        var requests = paginationInfos
+            .Select(pi => new GetOrganizationUsersRequest
             {
                 OrganizationId = organization.Id,
                 PaginationInfo = pi
             });
 
+        var client = host.CreateDefaultClient();
+
         // Act
         var results = new List<User[]>();
-        foreach (var query in queries)
+        foreach (var request in requests)
         {
-            var result = await mediator.Send(query);
-            results.Add(result);
+            var response = await client.PostAsync(_baseUrl, request);
+            var result = await response.Content.ReadFromJsonAsync<GetOrganizationUsersResponse>();
+            if (result != null)
+            {
+                results.Add(result.Users);
+            }
         }
 
         // Assert
@@ -119,25 +128,30 @@ public class GetOrganizationUsersTests : BaseTests
         using var scope = host.Services.CreateScope();
 
         var mapper = scope.ServiceProvider.GetRequiredService<IMapper>();
-        var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
         var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
         await dbContext.Users.AddRangeAsync(users);
         await dbContext.SaveChangesAsync();
 
-        var queries = paginationInfos
-            .Select(pi => new GetOrganizationUsersQuery
+        var requests = paginationInfos
+            .Select(pi => new GetOrganizationUsersRequest
             {
                 OrganizationId = default,
                 PaginationInfo = pi
             });
 
+        var client = host.CreateDefaultClient();
+
         // Act
         var results = new List<User[]>();
-        foreach (var query in queries)
+        foreach (var request in requests)
         {
-            var result = await mediator.Send(query);
-            results.Add(result);
+            var response = await client.PostAsync(_baseUrl, request);
+            var result = await response.Content.ReadFromJsonAsync<GetOrganizationUsersResponse>();
+            if (result != null)
+            {
+                results.Add(result.Users);
+            }
         }
 
         // Assert
@@ -162,23 +176,26 @@ public class GetOrganizationUsersTests : BaseTests
         using var host = CreateHost();
         using var scope = host.Services.CreateScope();
 
-        var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
         var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
         await dbContext.Organizations.AddAsync(organization);
         await dbContext.Users.AddRangeAsync(users);
         await dbContext.SaveChangesAsync();
 
-        var query = new GetOrganizationUsersQuery
+        var request = new GetOrganizationUsersRequest
         {
             OrganizationId = organization.Id,
             PaginationInfo = paginationInfo
         };
 
+        var client = host.CreateDefaultClient();
+
         // Act
-        var result = await mediator.Send(query);
+        var response = await client.PostAsync(_baseUrl, request);
+        var result = await response.Content.ReadFromJsonAsync<GetOrganizationUsersResponse>();
 
         // Assert
-        result.Should().BeEmpty();
+        result.Should().NotBeNull();
+        result!.Users.Should().BeEmpty();
     }
 }

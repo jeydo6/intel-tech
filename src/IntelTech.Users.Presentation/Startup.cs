@@ -10,7 +10,7 @@ using Serilog;
 
 namespace IntelTech.Users.Presentation;
 
-internal class Startup
+internal sealed class Startup
 {
     public Startup(IConfiguration configuration)
     {

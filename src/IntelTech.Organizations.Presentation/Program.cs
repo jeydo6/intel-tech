@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace IntelTech.Organizations.Presentation;
 
-public class Program
+public sealed class Program
 {
     public static Task Main(string[] args)
         => CreateHostBuilder(args)

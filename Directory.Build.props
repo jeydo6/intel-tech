@@ -1,8 +1,9 @@
 <Project>
     <PropertyGroup>
-        <!-- <TargetFramework>netcoreapp3.1</TargetFramework> -->
         <TargetFramework>net7.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);1591</NoWarn>
     </PropertyGroup>
 </Project>

@@ -2,7 +2,7 @@ using FluentValidation;
 
 namespace IntelTech.Organizations.Application.Commands;
 
-internal sealed class AddOrganizationUserValidator : AbstractValidator<AddOrganizationUserCommand>
+public sealed class AddOrganizationUserValidator : AbstractValidator<AddOrganizationUserCommand>
 {
     public AddOrganizationUserValidator()
     {

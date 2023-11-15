@@ -11,7 +11,7 @@ namespace IntelTech.Organizations.Presentation.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public sealed class OrganizationsController
+public sealed class OrganizationsController : ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;

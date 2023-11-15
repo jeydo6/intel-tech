@@ -3,7 +3,7 @@ using IntelTech.Organizations.Application.Validators;
 
 namespace IntelTech.Organizations.Application.Queries;
 
-internal sealed class GetOrganizationUsersValidator : AbstractValidator<GetOrganizationUsersQuery>
+public sealed class GetOrganizationUsersValidator : AbstractValidator<GetOrganizationUsersQuery>
 {
     public GetOrganizationUsersValidator()
     {

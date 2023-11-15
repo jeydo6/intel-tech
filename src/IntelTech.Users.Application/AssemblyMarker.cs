@@ -1,5 +1,5 @@
 namespace IntelTech.Users.Application;
 
-public class AssemblyMarker
+public sealed class AssemblyMarker
 {
 }

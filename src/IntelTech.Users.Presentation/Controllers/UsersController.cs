@@ -10,7 +10,7 @@ namespace IntelTech.Users.Presentation.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public sealed class UsersController
+public sealed class UsersController : ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
