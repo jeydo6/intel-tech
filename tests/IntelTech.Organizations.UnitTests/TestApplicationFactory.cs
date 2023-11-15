@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using IntelTech.Organizations.Infrastructure.DbContexts;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;

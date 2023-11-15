@@ -1,4 +1,4 @@
-﻿namespace IntelTech.Bus.Domain.Messages
+namespace IntelTech.Bus.Domain.Messages
 {
     public sealed class CreateUserMessage
     {

@@ -1,4 +1,4 @@
-﻿using IntelTech.Organizations.Application.Models;
+using IntelTech.Organizations.Application.Models;
 using MediatR;
 
 namespace IntelTech.Organizations.Application.Queries

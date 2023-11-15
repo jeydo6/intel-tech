@@ -1,4 +1,4 @@
-﻿namespace IntelTech.Organizations.Application
+namespace IntelTech.Organizations.Application
 {
     public sealed class AssemblyMarker
     {

@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using IntelTech.Bus.Domain.Messages;
 using IntelTech.Organizations.Domain.Entities;
 using IntelTech.Organizations.Domain.Repositories;

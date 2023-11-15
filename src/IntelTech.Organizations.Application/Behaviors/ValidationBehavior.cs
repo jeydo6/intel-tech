@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
@@ -24,7 +24,7 @@ namespace IntelTech.Organizations.Application.Behaviors
                 if (!validationResult.IsValid)
                     validationFailures.AddRange(validationResult.Errors);
             }
-            
+
             if (validationFailures.Count > 0)
                 throw new ValidationException(validationFailures);
 

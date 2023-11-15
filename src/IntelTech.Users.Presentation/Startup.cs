@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using IntelTech.Bus.Domain.Settings;
 using IntelTech.Users.Application.Behaviors;
 using IntelTech.Users.Presentation.Filters;

@@ -1,4 +1,4 @@
-﻿namespace IntelTech.Organizations.Application.Models
+namespace IntelTech.Organizations.Application.Models
 {
     public sealed class PaginationInfo
     {

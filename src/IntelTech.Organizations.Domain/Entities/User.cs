@@ -1,4 +1,4 @@
-﻿namespace IntelTech.Organizations.Domain.Entities
+namespace IntelTech.Organizations.Domain.Entities
 {
     public sealed class User
     {

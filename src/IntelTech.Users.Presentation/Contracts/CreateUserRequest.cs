@@ -1,4 +1,4 @@
-﻿namespace IntelTech.Users.Presentation.Contracts
+namespace IntelTech.Users.Presentation.Contracts
 {
     public sealed class CreateUserRequest
     {

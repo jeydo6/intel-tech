@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using IntelTech.Organizations.Infrastructure.DbContexts;
 using Microsoft.EntityFrameworkCore;

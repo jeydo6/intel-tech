@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Bogus;
 using Bogus.DataSets;
@@ -12,12 +12,12 @@ namespace IntelTech.Organizations.UnitTests;
 public abstract class BaseTests : IDisposable
 {
     protected readonly Faker Faker = new Faker("ru");
-    
+
     private readonly TestApplicationFixture _fixture;
 
     public BaseTests(TestApplicationFixture fixture)
         => _fixture = fixture;
-    
+
     protected WebApplicationFactory<Program> CreateHost() => CreateHost(_ => { });
 
     protected WebApplicationFactory<Program> CreateHost(Action<IServiceCollection> dependencyOverrides)

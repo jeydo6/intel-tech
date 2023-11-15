@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using IntelTech.Bus.Domain.Settings;
 using IntelTech.Organizations.Application.Behaviors;
 using IntelTech.Organizations.Domain.Repositories;

@@ -1,4 +1,4 @@
-﻿namespace IntelTech.Organizations.Presentation.Contracts
+namespace IntelTech.Organizations.Presentation.Contracts
 {
     public sealed class AddOrganizationUserRequest
     {

@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using IntelTech.Organizations.Application.Commands;
 using IntelTech.Organizations.Domain.Repositories;

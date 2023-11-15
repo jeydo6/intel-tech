@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using IntelTech.Organizations.Application.Models;
 
 namespace IntelTech.Organizations.Application.Validators
