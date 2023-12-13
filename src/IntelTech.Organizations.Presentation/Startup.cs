@@ -6,7 +6,6 @@ using IntelTech.Organizations.Infrastructure.DbContexts;
 using IntelTech.Organizations.Infrastructure.Repositories;
 using IntelTech.Organizations.Presentation.Filters;
 using MassTransit;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -38,9 +37,9 @@ namespace IntelTech.Organizations.Presentation
             services.AddSwaggerGen();
 
             services.AddAutoMapper(typeof(Startup));
-            services
-                .AddMediatR(typeof(Application.AssemblyMarker))
-                .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddMediatR(cfg => cfg
+                .RegisterServicesFromAssemblyContaining<Application.AssemblyMarker>()
+                .AddOpenBehavior(typeof(ValidationBehavior<,>)));
             services.AddValidatorsFromAssemblyContaining<Application.AssemblyMarker>();
 
             services.Configure<BusSettings>(Configuration.GetSection(nameof(BusSettings)));
@@ -60,7 +59,6 @@ namespace IntelTech.Organizations.Presentation
                     busCfg.ConfigureEndpoints(context);
                 });
             });
-            services.AddMassTransitHostedService();
 
             services
                 .AddDbContext<ApplicationDbContext>()

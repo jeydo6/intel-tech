@@ -21,7 +21,7 @@ namespace IntelTech.Users.Application.Commands
             _logger = logger;
         }
 
-        public async Task<Unit> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var message = new CreateUserMessage
             {
@@ -36,7 +36,6 @@ namespace IntelTech.Users.Application.Commands
             {
                 await _bus.Publish(message, cancellationToken);
                 _logger.LogInformation("Сообщение {@Message} успешно отправлено", message);
-                return Unit.Value;
             }
             catch (Exception ex)
             {

@@ -8,7 +8,7 @@ using MediatR;
 namespace IntelTech.Organizations.Application.Behaviors
 {
     public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : notnull, IRequest<TResponse>
+        where TRequest : notnull, IBaseRequest
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 

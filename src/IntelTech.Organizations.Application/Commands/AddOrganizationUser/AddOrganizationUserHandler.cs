@@ -13,10 +13,7 @@ namespace IntelTech.Organizations.Application
         public AddOrganizationUserHandler(IOrganizationRepository organizationRepository)
             => _organizationRepository = organizationRepository;
 
-        public async Task<Unit> Handle(AddOrganizationUserCommand request, CancellationToken cancellationToken)
-        {
-            await _organizationRepository.AddUser(request.OrganizationId, request.UserId, cancellationToken);
-            return Unit.Value;
-        }
+        public Task Handle(AddOrganizationUserCommand request, CancellationToken cancellationToken)
+            => _organizationRepository.AddUser(request.OrganizationId, request.UserId, cancellationToken);
     }
 }

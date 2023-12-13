@@ -3,7 +3,6 @@ using IntelTech.Bus.Domain.Settings;
 using IntelTech.Users.Application.Behaviors;
 using IntelTech.Users.Presentation.Filters;
 using MassTransit;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -35,9 +34,9 @@ namespace IntelTech.Users.Presentation
             services.AddSwaggerGen();
 
             services.AddAutoMapper(typeof(Startup));
-            services
-                .AddMediatR(typeof(Application.AssemblyMarker))
-                .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddMediatR(cfg => cfg
+                .RegisterServicesFromAssemblyContaining<Application.AssemblyMarker>()
+                .AddOpenBehavior(typeof(ValidationBehavior<,>)));
             services.AddValidatorsFromAssemblyContaining<Application.AssemblyMarker>();
 
             services.AddMassTransit(cfg =>
@@ -54,7 +53,6 @@ namespace IntelTech.Users.Presentation
                     busCfg.ConfigureEndpoints(context);
                 });
             });
-            services.AddMassTransitHostedService();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
