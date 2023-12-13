@@ -13,7 +13,8 @@
 
     <ItemGroup>
         <ProjectReference Include="..\IntelTech.Organizations.Domain\IntelTech.Organizations.Domain.csproj" />
-        <ProjectReference Include="..\IntelTech.Bus.Domain\IntelTech.Bus.Domain.csproj" />
+        <ProjectReference Include="..\IntelTech.Common.Bus\IntelTech.Common.Bus.csproj" />
+        <ProjectReference Include="..\IntelTech.Common.Migrations\IntelTech.Common.Migrations.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,6 +1,5 @@
-using FluentValidation;
-using IntelTech.Bus.Domain.Settings;
-using IntelTech.Users.Application.Behaviors;
+using IntelTech.Common.Bus.Settings;
+using IntelTech.Common.Mediator.Extensions;
 using IntelTech.Users.Presentation.Filters;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
@@ -33,11 +32,14 @@ namespace IntelTech.Users.Presentation
             });
             services.AddSwaggerGen();
 
+            services.AddSerilog(cfg => cfg
+                .ReadFrom.Configuration(Configuration)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+            );
+
             services.AddAutoMapper(typeof(Startup));
-            services.AddMediatR(cfg => cfg
-                .RegisterServicesFromAssemblyContaining<Application.AssemblyMarker>()
-                .AddOpenBehavior(typeof(ValidationBehavior<,>)));
-            services.AddValidatorsFromAssemblyContaining<Application.AssemblyMarker>();
+            services.AddMediator<Application.AssemblyMarker>();
 
             services.AddMassTransit(cfg =>
             {

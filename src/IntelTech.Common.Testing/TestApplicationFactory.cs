@@ -1,11 +1,9 @@
-using System.Linq;
-using IntelTech.Organizations.Infrastructure.DbContexts;
+using IntelTech.Common.Migrations.Migrators;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace IntelTech.Organizations.UnitTests;
+namespace IntelTech.Common.Testing;
 
 public sealed class TestApplicationFactory<TEntryPoint> : WebApplicationFactory<TEntryPoint>
     where TEntryPoint : class
@@ -15,11 +13,8 @@ public sealed class TestApplicationFactory<TEntryPoint> : WebApplicationFactory<
         var host = base.CreateHost(builder);
 
         using var scope = host.Services.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
-        var migrations = dbContext.Database.GetPendingMigrations();
-        if (migrations.Any())
-            dbContext.Database.Migrate();
+        var migrator = scope.ServiceProvider.GetRequiredService<IDbMigrator>();
+        migrator.Migrate();
 
         return host;
     }

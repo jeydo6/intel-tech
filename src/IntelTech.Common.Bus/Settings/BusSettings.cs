@@ -1,4 +1,4 @@
-namespace IntelTech.Bus.Domain.Settings
+namespace IntelTech.Common.Bus.Settings
 {
     public sealed class BusSettings
     {

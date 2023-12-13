@@ -6,7 +6,9 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /app
 
 COPY ["Directory.Build.props", ""]
-COPY ["src/IntelTech.Bus.Domain/IntelTech.Bus.Domain.csproj", "src/IntelTech.Bus.Domain/"]
+COPY ["src/IntelTech.Common.Bus/IntelTech.Common.Bus.csproj", "src/IntelTech.Common.Bus/"]
+COPY ["src/IntelTech.Common.Mediator/IntelTech.Common.Mediator.csproj", "src/IntelTech.Common.Mediator/"]
+COPY ["src/IntelTech.Common.Migrations/IntelTech.Common.Migrations.csproj", "src/IntelTech.Common.Migrations/"]
 COPY ["src/IntelTech.Users.Application/IntelTech.Users.Application.csproj", "src/IntelTech.Users.Application/"]
 COPY ["src/IntelTech.Users.Presentation/IntelTech.Users.Presentation.csproj", "src/IntelTech.Users.Presentation/"]
 

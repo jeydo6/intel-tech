@@ -4,9 +4,11 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FluentAssertions;
 using FluentValidation;
+using IntelTech.Common.Testing;
 using IntelTech.Organizations.Application.Models;
 using IntelTech.Organizations.Application.Queries;
 using IntelTech.Organizations.Infrastructure.DbContexts;
+using IntelTech.Organizations.Presentation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
@@ -14,9 +16,9 @@ using Xunit;
 namespace IntelTech.Organizations.UnitTests.Commands;
 
 [Collection(TestApplicationCollection.Collection)]
-public class GetOrganizationUsersTests : BaseTests
+public sealed class GetOrganizationUsersTests : TestsBase
 {
-    public GetOrganizationUsersTests(TestApplicationFixture fixture) : base(fixture)
+    public GetOrganizationUsersTests(TestApplicationFixture<Program> fixture) : base(fixture)
     {
     }
 

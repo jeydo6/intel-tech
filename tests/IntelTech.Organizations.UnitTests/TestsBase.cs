@@ -1,29 +1,16 @@
-using System;
 using System.Linq;
 using Bogus;
 using Bogus.DataSets;
 using IntelTech.Organizations.Domain.Entities;
 using IntelTech.Organizations.Presentation;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace IntelTech.Organizations.UnitTests;
 
-public abstract class BaseTests : IDisposable
+public abstract class TestsBase : Common.Testing.TestsBase<Program>
 {
-    protected readonly Faker Faker = new Faker("ru");
-
-    private readonly TestApplicationFixture _fixture;
-
-    public BaseTests(TestApplicationFixture fixture)
-        => _fixture = fixture;
-
-    protected WebApplicationFactory<Program> CreateHost() => CreateHost(_ => { });
-
-    protected WebApplicationFactory<Program> CreateHost(Action<IServiceCollection> dependencyOverrides)
-        => _fixture.CreateHost(dependencyOverrides);
-
-    public void Dispose() => _fixture.Dispose();
+    public TestsBase(Common.Testing.TestApplicationFixture<Program> fixture) : base(fixture)
+    {
+    }
 
     protected Organization CreateOrganization()
         => new Organization

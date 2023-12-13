@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\IntelTech.Common.Testing\IntelTech.Common.Testing.csproj" />
     <ProjectReference Include="..\..\src\IntelTech.Organizations.Presentation\IntelTech.Organizations.Presentation.csproj" />
   </ItemGroup>
 

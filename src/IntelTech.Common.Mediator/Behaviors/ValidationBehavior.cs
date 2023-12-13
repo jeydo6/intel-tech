@@ -5,7 +5,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 
-namespace IntelTech.Users.Application.Behaviors
+namespace IntelTech.Common.Mediator.Behaviors
 {
     public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : notnull, IBaseRequest

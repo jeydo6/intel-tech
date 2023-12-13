@@ -1,6 +1,6 @@
-using FluentValidation;
-using IntelTech.Bus.Domain.Settings;
-using IntelTech.Organizations.Application.Behaviors;
+using IntelTech.Common.Bus.Settings;
+using IntelTech.Common.Mediator.Extensions;
+using IntelTech.Common.Migrations.Extensions;
 using IntelTech.Organizations.Domain.Repositories;
 using IntelTech.Organizations.Infrastructure.DbContexts;
 using IntelTech.Organizations.Infrastructure.Repositories;
@@ -36,11 +36,14 @@ namespace IntelTech.Organizations.Presentation
             });
             services.AddSwaggerGen();
 
+            services.AddSerilog(cfg => cfg
+                .ReadFrom.Configuration(Configuration)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+            );
+
             services.AddAutoMapper(typeof(Startup));
-            services.AddMediatR(cfg => cfg
-                .RegisterServicesFromAssemblyContaining<Application.AssemblyMarker>()
-                .AddOpenBehavior(typeof(ValidationBehavior<,>)));
-            services.AddValidatorsFromAssemblyContaining<Application.AssemblyMarker>();
+            services.AddMediator<Application.AssemblyMarker>();
 
             services.Configure<BusSettings>(Configuration.GetSection(nameof(BusSettings)));
 
@@ -62,6 +65,7 @@ namespace IntelTech.Organizations.Presentation
 
             services
                 .AddDbContext<ApplicationDbContext>()
+                .AddDbMigrator<ApplicationDbContext>()
                 .AddScoped<IOrganizationRepository, OrganizationRepository>()
                 .AddScoped<IUserRepository, UserRepository>();
         }
