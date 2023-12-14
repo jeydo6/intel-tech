@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   rabbitmq:
-    container_name: "IntelTech.Bus"
+    container_name: "IntelTech.Common.Bus"
     image: masstransit/rabbitmq:latest
     ports:
       - "5672:5672"
@@ -29,37 +29,37 @@ services:
       interval: 5s
       timeout: 10s
       retries: 10
-    
+
   users-service:
-    restart: on-failure
-    container_name: "IntelTech.Users.Service"
-    image: "users-service:latest"
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-    build:
-      context: .
-      dockerfile: src/IntelTech.Users.Presentation/Dockerfile
-    ports:
-      - "5100:80"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Staging
-      - ASPNETCORE_URLS=http://+:80
+     restart: on-failure
+     container_name: "IntelTech.Users.Service"
+     image: "users-service:latest"
+     depends_on:
+       rabbitmq:
+         condition: service_healthy
+     build:
+       context: .
+       dockerfile: src/IntelTech.Users.Presentation/Dockerfile
+     ports:
+       - "5100:80"
+     environment:
+       - ASPNETCORE_ENVIRONMENT=Staging
+       - ASPNETCORE_URLS=http://+:80
 
   organizations-service:
-    restart: on-failure
-    container_name: "IntelTech.Organizations.Service"
-    image: "organizations-service:latest"
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-      postgres:
-        condition: service_healthy
-    build:
-      context: .
-      dockerfile: src/IntelTech.Organizations.Presentation/Dockerfile
-    ports:
-      - "5200:80"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Staging
-      - ASPNETCORE_URLS=http://+:80
+     restart: on-failure
+     container_name: "IntelTech.Organizations.Service"
+     image: "organizations-service:latest"
+     depends_on:
+       rabbitmq:
+         condition: service_healthy
+       postgres:
+         condition: service_healthy
+     build:
+       context: .
+       dockerfile: src/IntelTech.Organizations.Presentation/Dockerfile
+     ports:
+       - "5200:80"
+     environment:
+       - ASPNETCORE_ENVIRONMENT=Staging
+       - ASPNETCORE_URLS=http://+:80

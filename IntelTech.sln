@@ -45,6 +45,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntelTech.Common.Testing", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntelTech.Common.Migrations", "src\IntelTech.Common.Migrations\IntelTech.Common.Migrations.csproj", "{7CBB59E5-C0E6-4B93-AB7C-22A864309FE1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{48A8459C-D85C-4026-8BCE-E90622D23891}"
+	ProjectSection(SolutionItems) = preProject
+		tests\docker-compose.yml = tests\docker-compose.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -206,5 +211,6 @@ Global
 		{6FC46117-E828-4ECD-8C0C-AE1134996708} = {3C179D70-AFB9-48F4-A543-41B8132F79C7}
 		{DA7A6906-AC7C-481A-830B-4F6F8425505A} = {3C179D70-AFB9-48F4-A543-41B8132F79C7}
 		{7CBB59E5-C0E6-4B93-AB7C-22A864309FE1} = {3C179D70-AFB9-48F4-A543-41B8132F79C7}
+		{48A8459C-D85C-4026-8BCE-E90622D23891} = {8DFBB53F-0A8A-49CE-9E1B-5441A0298B6F}
 	EndGlobalSection
 EndGlobal

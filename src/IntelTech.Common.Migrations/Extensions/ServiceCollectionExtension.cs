@@ -1,4 +1,4 @@
-﻿using IntelTech.Common.Migrations.Migrators;
+using IntelTech.Common.Migrations.Migrators;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

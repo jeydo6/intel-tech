@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   rabbitmq:
-    container_name: "IntelTech.Bus"
+    container_name: "IntelTech.Common.Bus"
     image: masstransit/rabbitmq:latest
     environment:
       - RABBITMQ_DEFAULT_USER=rabbitmq-user
@@ -19,5 +19,3 @@ services:
       - "POSTGRES_DB=organizations"
     ports:
       - "5432:5432"
-    
-  users-service:

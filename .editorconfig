@@ -9,6 +9,14 @@ indent_size = 4
 tab_width = 4
 max_line_length = 160
 
+[{*.xml,*.csproj}]
+indent_size = 2
+tab_width = 2
+
+[{*.yaml,*.yml}]
+indent_size = 2
+tab_width = 2
+
 # Microsoft .NET properties
 csharp_new_line_before_members_in_object_initializers = false
 csharp_preferred_modifier_order = public, private, protected, internal, file, new, static, abstract, virtual, sealed, readonly, override, extern, unsafe, volatile, async, required:suggestion

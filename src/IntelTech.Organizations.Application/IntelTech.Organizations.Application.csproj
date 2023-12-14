@@ -3,13 +3,13 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="FluentValidation" Version="11.8.1" />
+    <PackageReference Include="IntelTech.Common.Bus" Version="0.1.0" />
     <PackageReference Include="MassTransit" Version="8.1.2" />
     <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IntelTech.Common.Bus\IntelTech.Common.Bus.csproj" />
     <ProjectReference Include="..\IntelTech.Organizations.Domain\IntelTech.Organizations.Domain.csproj" />
   </ItemGroup>
 
