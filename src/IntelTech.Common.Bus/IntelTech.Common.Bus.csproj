@@ -1,7 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <PackageId>IntelTech.Common.Bus</PackageId>
-  </PropertyGroup>
-
-</Project>

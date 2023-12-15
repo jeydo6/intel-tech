@@ -38,8 +38,8 @@ services:
        rabbitmq:
          condition: service_healthy
      build:
-       context: .
-       dockerfile: src/IntelTech.Users.Presentation/Dockerfile
+       context: IntelTech.Users
+       dockerfile: Dockerfile
      ports:
        - "5100:80"
      environment:
@@ -56,8 +56,8 @@ services:
        postgres:
          condition: service_healthy
      build:
-       context: .
-       dockerfile: src/IntelTech.Organizations.Presentation/Dockerfile
+       context: IntelTech.Organizations
+       dockerfile: Dockerfile
      ports:
        - "5200:80"
      environment:
