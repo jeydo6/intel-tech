@@ -1,9 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
-using IntelTech.Organizations.Application.Commands;
-using IntelTech.Organizations.Application.Queries;
 using IntelTech.Organizations.Presentation.Contracts;
+using IntelTech.Organizations.Presentation.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,30 +12,18 @@ namespace IntelTech.Organizations.Presentation.Controllers
     public sealed class OrganizationsController
     {
         private readonly IMediator _mediator;
-        private readonly IMapper _mapper;
 
-        public OrganizationsController(
-            IMediator mediator,
-            IMapper mapper
-        )
-        {
-            _mediator = mediator;
-            _mapper = mapper;
-        }
+        public OrganizationsController(IMediator mediator)
+            => _mediator = mediator;
 
         [HttpPost(nameof(AddUser))]
-        public async Task AddUser([FromBody] AddOrganizationUserRequest request, CancellationToken cancellationToken)
-        {
-            var command = _mapper.Map<AddOrganizationUserCommand>(request);
-            await _mediator.Send(command, cancellationToken);
-        }
+        public Task AddUser([FromBody] AddOrganizationUserRequest request, CancellationToken cancellationToken)
+            => _mediator.Send(request.Map(), cancellationToken);
 
         [HttpPost(nameof(GetUsers))]
         public async Task<GetOrganizationUsersResponse> GetUsers([FromBody] GetOrganizationUsersRequest request, CancellationToken cancellationToken)
         {
-            var query = _mapper.Map<GetOrganizationUsersQuery>(request);
-            var result = await _mediator.Send(query, cancellationToken);
-
+            var result = await _mediator.Send(request.Map(), cancellationToken);
             return new GetOrganizationUsersResponse
             {
                 Users = result

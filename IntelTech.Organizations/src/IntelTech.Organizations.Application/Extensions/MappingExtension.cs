@@ -15,8 +15,8 @@ internal static class MappingExtension
     public static Domain.Models.PaginationInfo Map(this Models.PaginationInfo source)
         => new Domain.Models.PaginationInfo
         {
-            Limit = (source.PageNumber - 1) * source.PageSize,
-            Offset = source.PageSize
+            Limit = source.PageSize,
+            Offset = (source.PageNumber - 1) * source.PageSize
         };
 
     public static Models.User Map(this Domain.Entities.User source)

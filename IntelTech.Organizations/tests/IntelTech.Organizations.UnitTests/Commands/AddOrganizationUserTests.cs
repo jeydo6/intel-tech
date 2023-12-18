@@ -25,14 +25,14 @@ public sealed class AddOrganizationUserTests : TestsBase
         // Arrange
         var command = new AddOrganizationUserCommand();
 
-        using var host = CreateHost();
+        await using var host = CreateHost();
         using var scope = host.Services.CreateScope();
 
         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
         // Act / Assert
         await FluentActions
-            .Awaiting(async () => await mediator.Send(command))
+            .Awaiting(() => mediator.Send(command))
             .Should()
             .ThrowAsync<ValidationException>();
     }
@@ -44,7 +44,7 @@ public sealed class AddOrganizationUserTests : TestsBase
         var organization = CreateOrganization();
         var user = CreateUser();
 
-        using var host = CreateHost();
+        await using var host = CreateHost();
         using var scope = host.Services.CreateScope();
 
         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
@@ -64,9 +64,11 @@ public sealed class AddOrganizationUserTests : TestsBase
         await mediator.Send(command);
 
         // Assert
-        var actualUser = await dbContext.Users.FirstOrDefaultAsync(u => u.Id == command.UserId);
+        var actualUser = await dbContext.Users
+            .Include(u => u.Organization)
+            .FirstOrDefaultAsync(u => u.Id == command.UserId);
         actualUser.Should().NotBeNull();
         actualUser!.OrganizationId.Should().Be(command.OrganizationId);
-        actualUser!.Organization.Should().NotBeNull();
+        actualUser.Organization.Should().NotBeNull();
     }
 }

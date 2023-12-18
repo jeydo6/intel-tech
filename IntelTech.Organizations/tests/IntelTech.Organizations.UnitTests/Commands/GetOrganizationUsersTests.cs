@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using FluentAssertions;
 using FluentValidation;
 using IntelTech.Common.Testing;
+using IntelTech.Organizations.Application.Extensions;
 using IntelTech.Organizations.Application.Models;
 using IntelTech.Organizations.Application.Queries;
 using IntelTech.Organizations.Infrastructure.DbContexts;
@@ -31,14 +31,14 @@ public sealed class GetOrganizationUsersTests : TestsBase
             PaginationInfo = new PaginationInfo()
         };
 
-        using var host = CreateHost();
+        await using var host = CreateHost();
         using var scope = host.Services.CreateScope();
 
         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
         // Act / Assert
         await FluentActions
-            .Awaiting(async () => await mediator.Send(command))
+            .Awaiting(() => mediator.Send(command))
             .Should()
             .ThrowAsync<ValidationException>();
     }
@@ -65,10 +65,9 @@ public sealed class GetOrganizationUsersTests : TestsBase
                 PageSize = pageSize
             });
 
-        using var host = CreateHost();
+        await using var host = CreateHost();
         using var scope = host.Services.CreateScope();
 
-        var mapper = scope.ServiceProvider.GetRequiredService<IMapper>();
         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
         var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
@@ -96,7 +95,9 @@ public sealed class GetOrganizationUsersTests : TestsBase
         for (var i = 0; i < pageNumbersCount; i++)
         {
             var actualUsers = results[i];
-            var expectedUsers = mapper.Map<User[]>(users[(i * pageSize)..((i + 1) * pageSize)]);
+            var expectedUsers = users[(i * pageSize)..((i + 1) * pageSize)]
+                .Select(MappingExtension.Map)
+                .ToArray();
             actualUsers.Should().BeEquivalentTo(expectedUsers);
         }
     }
@@ -117,10 +118,9 @@ public sealed class GetOrganizationUsersTests : TestsBase
                 PageSize = pageSize
             });
 
-        using var host = CreateHost();
+        await using var host = CreateHost();
         using var scope = host.Services.CreateScope();
 
-        var mapper = scope.ServiceProvider.GetRequiredService<IMapper>();
         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
         var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
@@ -161,7 +161,7 @@ public sealed class GetOrganizationUsersTests : TestsBase
             PageSize = pageSize
         };
 
-        using var host = CreateHost();
+        await using var host = CreateHost();
         using var scope = host.Services.CreateScope();
 
         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
