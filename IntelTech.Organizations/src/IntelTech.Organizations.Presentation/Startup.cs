@@ -1,17 +1,15 @@
-using IntelTech.Common.Bus.Settings;
+using IntelTech.Common.Bus.RabbitMQ.Extensions;
 using IntelTech.Common.Mediator.Extensions;
 using IntelTech.Common.Migrations.Extensions;
 using IntelTech.Organizations.Domain.Repositories;
 using IntelTech.Organizations.Infrastructure.DbContexts;
 using IntelTech.Organizations.Infrastructure.Repositories;
 using IntelTech.Organizations.Presentation.Filters;
-using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Serilog;
 
 namespace IntelTech.Organizations.Presentation
@@ -27,8 +25,6 @@ namespace IntelTech.Organizations.Presentation
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<BusSettings>(Configuration.GetSection(nameof(BusSettings)));
-
             services.AddControllers(c =>
             {
                 c.Filters.Add<ValidationExceptionFilter>();
@@ -44,24 +40,7 @@ namespace IntelTech.Organizations.Presentation
 
             services.AddAutoMapper(typeof(Startup));
             services.AddMediator<Application.AssemblyMarker>();
-
-            services.Configure<BusSettings>(Configuration.GetSection(nameof(BusSettings)));
-
-            services.AddMassTransit(cfg =>
-            {
-                cfg.AddConsumersFromNamespaceContaining<Application.AssemblyMarker>();
-                cfg.UsingRabbitMq((context, busCfg) =>
-                {
-                    var busSettings = context.GetRequiredService<IOptions<BusSettings>>().Value;
-                    busCfg.Host(busSettings.Host, "/", hostCfg =>
-                    {
-                        hostCfg.Username(busSettings.User);
-                        hostCfg.Password(busSettings.Password);
-                    });
-
-                    busCfg.ConfigureEndpoints(context);
-                });
-            });
+            services.AddRabbitMqBus<Application.AssemblyMarker>(Configuration);
 
             services
                 .AddDbContext<ApplicationDbContext>()

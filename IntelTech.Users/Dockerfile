@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 EXPOSE 80
 
-FROM common-packages:0.1.0 AS packages
+FROM common-packages:0.2.0 AS packages
 WORKDIR /packages
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS publish

@@ -20,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{65EDF6
 		.dockerignore = .dockerignore
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntelTech.Common.Bus.RabbitMQ", "src\IntelTech.Common.Bus.RabbitMQ\IntelTech.Common.Bus.RabbitMQ.csproj", "{BCF2E904-80CB-4FAD-924F-EFB6F32FBC63}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,18 @@ Global
 		{BCDD9609-EA9F-48E0-B48B-621300D46452}.Release|x64.Build.0 = Release|Any CPU
 		{BCDD9609-EA9F-48E0-B48B-621300D46452}.Release|x86.ActiveCfg = Release|Any CPU
 		{BCDD9609-EA9F-48E0-B48B-621300D46452}.Release|x86.Build.0 = Release|Any CPU
+		{BCF2E904-80CB-4FAD-924F-EFB6F32FBC63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCF2E904-80CB-4FAD-924F-EFB6F32FBC63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCF2E904-80CB-4FAD-924F-EFB6F32FBC63}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BCF2E904-80CB-4FAD-924F-EFB6F32FBC63}.Debug|x64.Build.0 = Debug|Any CPU
+		{BCF2E904-80CB-4FAD-924F-EFB6F32FBC63}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BCF2E904-80CB-4FAD-924F-EFB6F32FBC63}.Debug|x86.Build.0 = Debug|Any CPU
+		{BCF2E904-80CB-4FAD-924F-EFB6F32FBC63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCF2E904-80CB-4FAD-924F-EFB6F32FBC63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCF2E904-80CB-4FAD-924F-EFB6F32FBC63}.Release|x64.ActiveCfg = Release|Any CPU
+		{BCF2E904-80CB-4FAD-924F-EFB6F32FBC63}.Release|x64.Build.0 = Release|Any CPU
+		{BCF2E904-80CB-4FAD-924F-EFB6F32FBC63}.Release|x86.ActiveCfg = Release|Any CPU
+		{BCF2E904-80CB-4FAD-924F-EFB6F32FBC63}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,5 +101,6 @@ Global
 		{D9838A77-9D46-461F-B502-760F9FDD85CC} = {727379DC-74FA-44B3-A087-08953F0CA727}
 		{4A52E15F-C705-496D-9A05-11509EA7D2AA} = {727379DC-74FA-44B3-A087-08953F0CA727}
 		{BCDD9609-EA9F-48E0-B48B-621300D46452} = {727379DC-74FA-44B3-A087-08953F0CA727}
+		{BCF2E904-80CB-4FAD-924F-EFB6F32FBC63} = {727379DC-74FA-44B3-A087-08953F0CA727}
 	EndGlobalSection
 EndGlobal

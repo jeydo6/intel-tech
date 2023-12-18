@@ -1,8 +1,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using IntelTech.Common.Bus.Messages;
-using MassTransit;
+using IntelTech.Common.Bus;
+using IntelTech.Users.Application.Messages;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -10,14 +10,14 @@ namespace IntelTech.Users.Application.Commands
 {
     internal sealed class CreateUserHandler : IRequestHandler<CreateUserCommand>
     {
-        private readonly IBus _bus;
+        private readonly IMessageProducer _producer;
         private readonly ILogger<CreateUserHandler> _logger;
 
         public CreateUserHandler(
-            IBus bus,
+            IMessageProducer producer,
             ILogger<CreateUserHandler> logger)
         {
-            _bus = bus;
+            _producer = producer;
             _logger = logger;
         }
 
@@ -34,7 +34,7 @@ namespace IntelTech.Users.Application.Commands
 
             try
             {
-                await _bus.Publish(message, cancellationToken);
+                await _producer.Produce(message, cancellationToken);
                 _logger.LogInformation("Сообщение {@Message} успешно отправлено", message);
             }
             catch (Exception ex)
