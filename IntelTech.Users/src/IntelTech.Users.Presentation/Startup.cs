@@ -34,7 +34,6 @@ namespace IntelTech.Users.Presentation
                 .WriteTo.Console()
             );
 
-            services.AddAutoMapper(typeof(Startup));
             services.AddMediator<Application.AssemblyMarker>();
             services.AddRabbitMqBus<Application.AssemblyMarker>(Configuration);
         }
