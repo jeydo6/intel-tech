@@ -40,3 +40,26 @@ Test task from [IntelTech](https://lahta-spb.ru) company.
     - Table 'Organizations': Id, Name
 
     - Write Unit-tests
+
+## How to run the project
+
+### Step 1. Build `IntelTeck.Common` `Docker`-image:
+
+```shell
+# Add new NuGet-source
+dotnet nuget add source ~/Packages --name local
+
+# Pack the packages
+cd $pathToTheSolution/IntelTech.Common
+find src -type d -depth 1 -exec dotnet pack {} --output ~/Packages \;
+
+# Build the image
+docker build --tag common-packages:0.2.0 .
+```
+
+### Step 2. Run the `docker-compose.yml`:
+
+```shell
+cd $pathToTheSolution
+docker compose up -d
+```
