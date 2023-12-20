@@ -1,45 +1,42 @@
 # intel-tech
 
-Test task for [IntelTech](https://lahta-spb.ru) company.
+Test task from [IntelTech](https://lahta-spb.ru) company.
 
-```
-Тестовое задание
+## Tech stack:
 
-Стэк:
--net Core 3.1
--MediatR
--MassTransit(реализует паттерн шины для RabbitMq)
--AutoMapper (приведение одних типов классов к другим)
--Serilog
--Entity Framework
--Docker
--Postgres(MS SQL)
--FluentValidation
+    - .NET Core 3.1
+    - PostgreSQL, MSSQL
+    - Entity Framework
+    - FluentValidation
+    - MassTransit, RabbitMQ
+    - MediatR
+    - AutoMapper
+    - Serilog
+    - Docker
 
-Задание:
+## Description:
 
-В Docker поднять:
--RabbitMq
--2 сервиса которые будут между собой общаться по шине
--БД любую из перечисленных
+### Within `Docker` run:
 
-1 сервис:
-Принимает запросы типа post (имя, фамилия, отчество, номер, email)
-Предусмотреть простую валидацию что все кроме отчества должно быть заполнено.
-В бизнес логике этого запроса отправлять по шине полученную информацию на 2 сервис.
-Так же при отправке в консоль выводить логирование (сообщение о отправке вышеперечисленных данных)
+    - Bus (RabbitMQ)
+    - 2 services that use RabbitMQ to message with each other
+    - Database
 
-2 сервис:
-Принять сообщение с шины и положить его в БД (таблица Users) и залогировать это в консоль.
-Так же у сервиса есть post запрос который связывает пользователя с организацией (таблица Organizations)
-И post-запрос который возвращает пагинацию пользователей по организации. (когда возвращаем ответ используем AutoMapper)
-При старте сделать seed в БД если там ничего нет.
+### `Service # 1`:
 
-БД:
-Таблица Users:
-Ключ пользователя + Ключ организации к которой привязан пользователь + Информация о пользователе
-Таблица Organizations:
-Ключ организации + Название организации
+    - Accept POST requests (first name, last name, middle name, phone number, e-mail)
+    - Send the accepted data to the 'Service # 2' using the bus.
+    - Validate the all fields except the middle name.
+    - Log the accepted data.
 
-Написать юнит тесты
-```
+### `Service # 2`:
+
+    - Consume the message with data from 'Service # 1' and log the message into 'Console'.
+    - Accept POST request that link a 'User' with 'Organization'.
+    - Accept POST request that returns paginated users by an organization (using AutoMapper).
+    - Seed data into 'Database' when the application starts if it is empty.
+
+    - Table 'Users': UserId, OrganizationId, UserInfo from 'Service # 1'
+    - Table 'Organizations': Id, Name
+
+    - Write Unit-tests
